@@ -25,9 +25,9 @@ with codecs.open(os.path.join("docs", "HISTORY.txt"),
                  encoding='utf-8') as f:
     long_description += '\n' + f.read()
 
-setup(name='gs.group.base',
+setup(name='gs.group.type.set',
       version=version,
-      description="The core code to support GroupServer groups",
+      description="Change the type of a GroupServer group",
       long_description=long_description,
       classifiers=[
           'Development Status :: 5 - Production/Stable',
@@ -43,15 +43,18 @@ setup(name='gs.group.base',
       keywords='group, page',
       author='Michael JasonSmith',
       author_email='mpj17@onlinegroups.net',
-      url='https://source.iopen.net/groupserver/gs.group.base/',
+      url='https://source.iopen.net/groupserver/gs.group.type.set/',
       license='ZPL 2.1',
       packages=find_packages(exclude=['ez_setup']),
-      namespace_packages=['gs', 'gs.group', ],
+      namespace_packages=['gs', 'gs.group', 'gs.group.type', ],
       include_package_data=True,
       zip_safe=False,
       install_requires=[
           'setuptools',
           'zope.component',
+          'zope.cachedescriptors',
+          'zope.interface',
+          'zope.schema',
           'gs.group.base',
       ],
       entry_points="""

@@ -1,0 +1,32 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      metal:use-macro="context/@@groupserver_full_layout/page">
+  <head>
+    <title metal:fill-slot="title">I am a page: Example</title>
+  </head>
+  <body>
+    <ul metal:fill-slot="breadcrumb">
+      <li>
+        <a href="/" class="icon-alone">
+          <span aria-hidden="true" data-icon="&#x2302;"></span>
+          <span class="screen-reader-text">Site home page</span>
+        </a>
+      </li>
+      <li>
+        <a href="#" tal:attributes="href view/groupInfo/relativeURL"
+           class="group"><strong tal:content="view/groupInfo/name">Important</strong></a>
+      </li>
+      <li>
+        A page.
+      </li>
+    </ul>
+    <tal:block
+      content="structure provider:groupserver.FormStatusMessage"
+      define="errors view/errors; status view/status; widgets view/widgets"
+      metal:fill-slot="messages">&#160;</tal:block>
+    <div id="gs-group-type-set" metal:fill-slot="body">
+      <p>I am a page, honest.</p>
+    </div><!--a-page-->
+  </body>
+</html>

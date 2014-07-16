@@ -3,4 +3,15 @@
            xmlns:browser="http://namespaces.zope.org/browser"
            i18n_domain="groupserver">
 
+  <class class=".vocabulary.GroupTypeVocabulary">
+    <implements interface="zope.schema.interfaces.IVocabulary"/>
+    <implements interface="zope.schema.interfaces.IVocabularyTokenized"/>
+  </class>
+
+  <browser:page
+    name="change-type.html"
+    for="gs.group.base.interfaces.IGSGroupMarker"
+    class=".form.ChangeGroupType"
+    permission="zope2.ManageProperties"/>
+
 </configure>
