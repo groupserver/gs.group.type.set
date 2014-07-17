@@ -27,11 +27,11 @@ class ChangeGroupType(GroupForm):
     label = 'Change the group type'
     pageTemplateFileName = to_ascii('browser/templates/form.pt')
     template = ZopeTwoPageTemplateFile(pageTemplateFileName)
-    form_fields = form.Fields(IChangeGroupType, render_context=False)
+    interface = IChangeGroupType
 
     @Lazy
     def form_fields(self):
-        form_fields = form.Fields(self.interface, render_context=True)
+        form_fields = form.Fields(self.interface, render_context=False)
         form_fields['groupType'].custom_widget = radio_widget
         return form_fields
 
