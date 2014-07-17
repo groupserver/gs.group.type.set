@@ -8,6 +8,10 @@
     <implements interface="zope.schema.interfaces.IVocabularyTokenized"/>
   </class>
 
+  <utility name="groupserver.GroupType"
+           provides="zope.schema.interfaces.IVocabularyFactory"
+           component=".vocabulary.GroupTypeVocabulary" />
+
   <browser:page
     name="change-type.html"
     for="gs.group.base.interfaces.IGSGroupMarker"
