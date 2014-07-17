@@ -17,7 +17,7 @@
         <a href="#" tal:attributes="href view/groupInfo/relativeURL"
            class="group"><strong tal:content="view/groupInfo/name">Important</strong></a>
       </li>
-      <li>
+      <li tal:content="view/label">
         A page.
       </li>
     </ul>
@@ -26,7 +26,17 @@
       define="errors view/errors; status view/status; widgets view/widgets"
       metal:fill-slot="messages">&#160;</tal:block>
     <div id="gs-group-type-set" metal:fill-slot="body">
-      <p>I am a page, honest.</p>
-    </div><!--a-page-->
+      <h1 tal:content="view/label">Change</h1>
+      <tal:block define="widgets view/widgets">
+        <tal:block replace="structure provider:groupserver.FormWidgets"/>
+      </tal:block>
+      <div class="buttons" tal:condition="view/availableActions">
+        <tal:block repeat="action view/actions">
+          <div class="formelementbutton">
+            <span tal:replace="structure action/render">Button</span>
+          </div>
+        </tal:block>
+      </div><!--buttons-->
+    </div><!--gs-group-type-set-->
   </body>
 </html>
