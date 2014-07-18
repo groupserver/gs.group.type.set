@@ -52,8 +52,8 @@ setup(name='gs.group.type.set',
       install_requires=[
           'setuptools',
           'zope.browserpage',
-          'zope.component',
           'zope.cachedescriptors',
+          'zope.component',
           'zope.formlib',
           'zope.interface',
           'zope.schema',
@@ -65,6 +65,7 @@ setup(name='gs.group.type.set',
           'gs.core',
           'gs.group.base',
       ],
+      extras_require={'docs': ['Sphinx', ], },
       entry_points="""
           # -*- Entry points: -*-
       """,)
