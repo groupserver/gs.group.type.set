@@ -35,11 +35,6 @@ class ISetType(Interface):
         description='The name of the group type',
         required=True)
 
-    typeId = TextLine(
-        title='Type Identifier',
-        description='The unique ID used for this group type',
-        required=True)
-
     weight = Int(
         title='Weight',
         description='The sort-order for this group-type',

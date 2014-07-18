@@ -13,7 +13,6 @@
 #
 ############################################################################
 from __future__ import unicode_literals
-from operator import attrgetter
 from zope.cachedescriptors.property import Lazy
 from zope.component import getGlobalSiteManager
 from zope.interface.common.mapping import IEnumerableMapping
@@ -63,15 +62,15 @@ class GroupTypeVocabulary(object):
 
     @staticmethod
     def adaptor_to_term(a):
-        retval = SimpleTerm(a.typeId, a.typeId, a.name)
+        retval = SimpleTerm(a[0], a[0], a[1].name)
         return retval
 
     @Lazy
     def adaptors(self):
         gsm = getGlobalSiteManager()
-        adaptors = [a[1] for a in gsm.getAdapters((self.group, ), ISetType)
+        adaptors = [a for a in gsm.getAdapters((self.group, ), ISetType)
                     if a[1].show]
-        retval = sorted(adaptors, key=attrgetter('weight'))
+        retval = sorted(adaptors, key=lambda a: a[1].weight)
         return retval
 
     @Lazy
