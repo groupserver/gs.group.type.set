@@ -21,11 +21,15 @@
         A page.
       </li>
     </ul>
-    <tal:block
-      content="structure provider:groupserver.FormStatusMessage"
-      define="errors view/errors; status view/status; widgets view/widgets"
-      metal:fill-slot="messages">&#160;</tal:block>
-    <div id="gs-group-type-set" metal:fill-slot="body">
+    <tal:block content="structure provider:groupserver.FormStatusMessage"
+               define="errors view/errors; status view/status;
+                       widgets view/widgets;
+                       showPageErrors python:True;
+                       showWidgetErrors python:True"
+               metal:fill-slot="messages">&#160;</tal:block>
+    <form id="gs-group-type-set" class="gs-content-js-required"
+          metal:fill-slot="body" enctype="multipart/form-data" method="post"
+          action="." tal:attributes="action request/URL">
       <h1 tal:content="view/label">Change</h1>
       <tal:block define="widgets view/widgets">
         <tal:block replace="structure provider:groupserver.FormWidgets"/>
@@ -37,6 +41,6 @@
           </div>
         </tal:block>
       </div><!--buttons-->
-    </div><!--gs-group-type-set-->
+    </form><!--gs-group-type-set-->
   </body>
 </html>
