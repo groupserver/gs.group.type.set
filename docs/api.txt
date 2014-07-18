@@ -36,7 +36,7 @@ need the following properties.
 
 The setter will provide the ``set()`` method.
 
-Abstract Base Classes
+Abstract base classes
 ---------------------
 
 .. autoclass:: gs.group.type.set.SetABC
@@ -44,3 +44,18 @@ Abstract Base Classes
 
 .. autoclass:: gs.group.type.set.UnsetABC
    :members:
+
+Interfaces
+----------
+
+.. autoclass:: gs.group.type.set.interfaces.ISetType
+   :members:
+
+.. autoclass:: gs.group.type.set.interfaces.IUnsetType
+   :members:
+
+Vocabulary
+----------
+
+.. autoclass:: gs.group.type.set.vocabulary.GroupTypeVocabulary
+   :members: __iter__, __len__, __contains__, adaptors, adaptorIds
