@@ -20,7 +20,7 @@ from Products.Five.utilities.interfaces import IMarkerInterfaces
 class SetABC(object):
     '''Abstract base-class for adaptors that set the type of a group.
 
-:param group: The group that is adapted.
+:param object group: The group that is adapted.
     '''
     __metaclass__ = ABCMeta
 
@@ -58,11 +58,36 @@ an earlier call to :meth:`gs.group.type.set.UnsetABC.unset`.
         add = adaptedToMarker.dottedToInterfaces(interfaces)
         adaptedToMarker.update(add=add)
 
+    def set_list_property(self, prop, value, propType='string'):
+        '''Set the property on the mailing list object
+
+:param string prop: The name of the property to set.
+:param value: The value of the new property.
+:param string propType: The type of the property. Must be one of:
+                        ``string``, ``boolean``, ``lines``, or ``int``
+
+The :meth:`set_list_property` creates a new property on the list
+object that is associated with the group, if the property is missing, or
+changes the property to a new value if it is present.
+
+Example::
+
+    self.set_list_property('replyto', 'sender')
+'''
+        siteRoot = self.group.site_root()
+        listManager = getattr(siteRoot, 'ListManager')
+        mailingList = getattr(listManager, self.group.getId())
+        if mailingList.hasProperty(prop):
+            d = {prop: value}
+            mailingList.manage_changeProperties(**d)
+        else:
+            mailingList.manage_addProperty(prop, value, propType)
+
 
 class UnsetABC(object):
     '''Abstract base-class for adaptors that unset the type of a group.
 
-:param group: The group that is adapted.
+:param object group: The group that is adapted.
 
 A group *type* can be associated with many different settings. The *unset*
 classes remove these settings, so later classes that implment the
@@ -101,3 +126,21 @@ For example::
         adaptedToMarker = IMarkerInterfaces(obj)
         remove = adaptedToMarker.dottedToInterfaces(interfaces)
         adaptedToMarker.update(remove=remove)
+
+    def del_list_property(self, prop):
+        '''Delete a list property
+
+:param string prop: The property to delete.
+
+This method deletes the property with the supplied name on the mailing-list
+object that is associated with the group.
+
+For example::
+
+    self.del_list_property('replyto')
+'''
+        siteRoot = self.group.site_root()
+        listManager = getattr(siteRoot, 'ListManager')
+        mailingList = getattr(listManager, self.group.getId())
+        if mailingList.hasProperty(prop):
+            mailingList.manage_delProperties([prop, ])
