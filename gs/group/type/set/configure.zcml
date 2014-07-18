@@ -15,7 +15,7 @@
   <browser:page
     name="change-type.html"
     for="gs.group.base.interfaces.IGSGroupMarker"
-    class=".form.ChangeGroupType"
+    class=".changeform.ChangeGroupType"
     permission="zope2.ManageProperties"/>
 
 </configure>

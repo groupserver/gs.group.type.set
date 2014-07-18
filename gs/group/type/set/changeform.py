@@ -25,7 +25,7 @@ from .interfaces import (IChangeGroupType, ISetType, IUnsetType)
 
 class ChangeGroupType(GroupForm):
     'The Change Group Type page view'
-    label = 'Change the group type'
+    label = 'Change group type'
     pageTemplateFileName = to_ascii('browser/templates/form.pt')
     template = ZopeTwoPageTemplateFile(pageTemplateFileName)
     interface = IChangeGroupType
