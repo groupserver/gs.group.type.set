@@ -22,16 +22,18 @@ including a vocabulary_ that list the different group types.
 
 The group-type alters what the group page looks like, and who can
 post to the group [#canpost]_. In addition changing the group
-type should also alter some properties on the mailing list.
+type should also alter some properties on the mailing list. The
+default properties are implemented by **deleting** the property
+from the mailing list object.
 
-============  ============  ===========
-Type          ``unclosed``  ``replyto``
-============  ============  ===========
-Discussion    False         ``group``
-Announcement  False         ``sender``
-Support       True          ``sender``
-Closed        NA            NA
-============  ============  ===========
+============  ===============  ====================
+Type          ``unclosed``     ``replyto``
+============  ===============  ====================
+Discussion    False (default)   ``group`` (default)
+Announcement  False (default)   ``sender``
+Support       True              ``sender``
+Closed        NA                NA
+============  ===============  ====================
 
 :Unclosed: The ``unclosed`` property lingers from ``MailBoxer``,
            and is used to allow non-members to post to a group.
