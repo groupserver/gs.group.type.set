@@ -1,43 +1,16 @@
 ``gs.group.type.set`` API
 =========================
 
-I think what I will do is take a leaf out of the "Can post" code
-and use interfaces and adaption to power the selectable group
-type. When changing the type of a group two things need to
-happen: the old type needs to be unset, and the new type needs to
-be set. So I will need two adaptors for each of the group types.
-
-One adaptor will be used to clear out the old settings::
-
-  Change Group Type ──→ IUnset ──→ Unsetter
-
-The adaptor will be fairly simple, adapting a specific group-type
-to the IUnset interface, and providing the ``unset()`` method.
-
-The other adaptor provided by each group type will set the new
-setting::
-
-  Change Group Type ──→ ISet ──→ Setter
-
-The setters will have to be used to power the vocabulary that is
-used with the Change Group Type page. As such each setter will
-need the following properties.
-
-* ID: an identifier for the group-type. Used as the token that is
-  passed back from the form, and used to get the named adaptor.
-
-* Weight: an integer that is use to order the group types.
-
-* Title: the name of the group type, that is displayed on the
-  page.
-
-* Show: a Boolean that allows for particular group-types to be
-  turned off.
-
-The setter will provide the ``set()`` method.
+The application programming-interface for this product is
+provided by three components: the `abstract base classes`_, the
+interfaces_ and the vocabulary_.
 
 Abstract base classes
 ---------------------
+
+There are two abstract base classes, :class:`SetABC` and
+:class:`UnsetABC`, that are used to provide the core
+functionality of the Set and Unset classes.
 
 .. autoclass:: gs.group.type.set.SetABC
    :members:
@@ -48,6 +21,10 @@ Abstract base classes
 Interfaces
 ----------
 
+There are two interfaces, :class:`ISetType` and
+:class:`IUnsetType`, that are used to adapt the set and unset
+classes.
+
 .. autoclass:: gs.group.type.set.interfaces.ISetType
    :members:
 
@@ -56,6 +33,10 @@ Interfaces
 
 Vocabulary
 ----------
+
+The :class:`GroupTypeVocabulary` vocabulary is used to list all
+the classes that adapt a group to the :class:`ISetType`
+interface.
 
 .. autoclass:: gs.group.type.set.vocabulary.GroupTypeVocabulary
    :members: __iter__, __len__, __contains__, adaptors, adaptorIds
