@@ -16,10 +16,11 @@ from __future__ import absolute_import, unicode_literals
 from zope.cachedescriptors.property import Lazy
 from zope.formlib import form
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
+from zope.component import getGlobalSiteManager
 from gs.content.form.base import radio_widget
 from gs.core import to_ascii
 from gs.group.base import GroupForm
-from .interfaces import IChangeGroupType
+from .interfaces import (IChangeGroupType, ISetType, IUnsetType)
 
 
 class ChangeGroupType(GroupForm):
@@ -43,10 +44,25 @@ class ChangeGroupType(GroupForm):
 
     @form.action(label='Change', failure='handle_change_action_failure')
     def handle_change(self, action, data):
-        self.status = 'Foo'
+        # Note that it is importtant to get the setter and unsetter *before*
+        # calling unset. After unset is called the group is (briefly) not
+        # a group, so the adapter will fail.
+        unsetter = IUnsetType(self.context)
+        gsm = getGlobalSiteManager()
+        setter = gsm.getAdapter(self.context, ISetType, data['groupType'])
+
+        unsetter.unset()
+        setter.set()
+
+        nv = 'an' if (setter.name.lower()[0] in 'aeiou') else 'a'
+        ov = 'an' if (unsetter.name.lower()[0] in 'aeiou') else 'a'
+        s = 'Changed {0} to {1} {2} from {3} {4}'
+        self.status = s.format(self.groupInfo.name, nv, setter.name.lower(),
+                               ov, unsetter.name.lower())
 
     def handle_change_action_failure(self, action, data, errors):
         if len(errors) == 1:
             self.status = '<p>There is an error:</p>'
         else:
             self.status = '<p>There are errors:</p>'
+        self.status = data
