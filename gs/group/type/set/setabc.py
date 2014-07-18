@@ -32,3 +32,20 @@ class SetABC(object):
         adaptedToMarker = IMarkerInterfaces(obj)
         add = adaptedToMarker.dottedToInterfaces(interfaces)
         adaptedToMarker.update(add=add)
+
+
+class UnsetABC(object):
+    __metaclass__ = ABCMeta
+
+    def __init__(self, group):
+        self.context = self.group = group
+
+    @abstractmethod
+    def unset(self):
+        raise NotImplemented('Subclasses must implement ``unset()``.')
+
+    @staticmethod
+    def del_marker(obj, interfaces):
+        adaptedToMarker = IMarkerInterfaces(obj)
+        remove = adaptedToMarker.dottedToInterfaces(interfaces)
+        adaptedToMarker.update(remove=remove)

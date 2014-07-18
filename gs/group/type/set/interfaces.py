@@ -19,6 +19,10 @@ from zope.schema import TextLine, Int, Bool, Choice
 
 class IUnsetType(Interface):
     'The interface for unsetting a group-type'
+    name = TextLine(
+        title='Name',
+        description='The name of the group type',
+        required=True)
 
     def unset():
         'Unset the group type'
