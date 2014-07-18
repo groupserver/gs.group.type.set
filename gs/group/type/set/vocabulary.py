@@ -31,17 +31,17 @@ class GroupTypeVocabulary(object):
 
     def __iter__(self):
         """See zope.schema.interfaces.IIterableVocabulary"""
-        for a in self.adapters:
-            retval = self.adapter_to_term(a)
+        for a in self.adaptors:
+            retval = self.adaptor_to_term(a)
             yield retval
 
     def __len__(self):
         """See zope.schema.interfaces.IIterableVocabulary"""
-        return len(self.adapterIds)
+        return len(self.adaptorIds)
 
     def __contains__(self, value):
         """See zope.schema.interfaces.IBaseVocabulary"""
-        retval = value in self.adapterIds
+        retval = value in self.adaptorIds
         return retval
 
     def getQuery(self):
@@ -54,24 +54,24 @@ class GroupTypeVocabulary(object):
 
     def getTermByToken(self, token):
         """See zope.schema.interfaces.IVocabularyTokenized"""
-        if token in self:
-            a = getGlobalSiteManager.getAdapter(self.group, ISetType,
-                                                token)
-            retval = self.adapter_to_term(a)
-            return retval
-        raise LookupError(token)
+        if token not in self:
+            raise LookupError(token)
+        gsm = getGlobalSiteManager()
+        a = gsm.getAdapter(self.group, ISetType, token)
+        retval = self.adaptor_to_term(a)
+        return retval
 
     @staticmethod
-    def adapter_to_term(a):
+    def adaptor_to_term(a):
         retval = SimpleTerm(a.typeId, a.typeId, a.name)
         return retval
 
     @Lazy
-    def adapters(self):
+    def adaptors(self):
         gsm = getGlobalSiteManager()
-        adapters = [a[1] for a in gsm.getAdapters((self.group, ), ISetType)
+        adaptors = [a[1] for a in gsm.getAdapters((self.group, ), ISetType)
                     if a[1].show]
-        retval = sorted(adapters, key=attrgetter('weight'))
+        retval = sorted(adaptors, key=attrgetter('weight'))
         return retval
 
     @Lazy
