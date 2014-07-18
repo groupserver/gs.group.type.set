@@ -3,7 +3,11 @@
       xmlns:metal="http://xml.zope.org/namespaces/metal"
       metal:use-macro="context/@@groupserver_full_layout/page">
   <head>
-    <title metal:fill-slot="title">I am a page: Example</title>
+    <title metal:fill-slot="title">
+      <tal:block content="view/label">I am a page</tal:block>:
+      <tal:block content="view/groupInfo/name">This group</tal:block>:
+      <tal:block content="view/siteInfo/name">This site</tal:block>
+    </title>
   </head>
   <body>
     <ul metal:fill-slot="breadcrumb">
