@@ -37,10 +37,11 @@ class ChangeGroupType(GroupForm):
         return form_fields
 
     def setUpWidgets(self, ignore_request=False):
-        # TODO: Set the current group-type up as the default
+        currentType = IUnsetType(self.context).setTypeId
+        data = {'groupType': currentType}
         self.widgets = form.setUpWidgets(
             self.form_fields, self.prefix, self.context, self.request,
-            form=self, ignore_request=ignore_request)
+            form=self, data=data, ignore_request=ignore_request)
 
     @form.action(label='Change', failure='handle_change_action_failure')
     def handle_change(self, action, data):
@@ -56,7 +57,7 @@ class ChangeGroupType(GroupForm):
 
         nv = 'an' if (setter.name.lower()[0] in 'aeiou') else 'a'
         ov = 'an' if (unsetter.name.lower()[0] in 'aeiou') else 'a'
-        s = 'Changed {0} to {1} {2} from {3} {4}'
+        s = 'Changed {0} <strong>to {1} {2}</strong> from {3} {4}.'
         self.status = s.format(self.groupInfo.name, nv, setter.name.lower(),
                                ov, unsetter.name.lower())
 

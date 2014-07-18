@@ -24,6 +24,12 @@ class IUnsetType(Interface):
         description='The name of the group type',
         required=True)
 
+    setTypeId = TextLine(
+        title='Set group-type identifier',
+        description='The identifier for the adaptor that sets the '
+                    'group-type that this adaptor unsets',
+        required=True)
+
     def unset():
         'Unset the group type'
 
