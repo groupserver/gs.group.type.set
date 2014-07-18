@@ -31,7 +31,7 @@ class GroupTypeVocabulary(object):
     def __iter__(self):
         """See zope.schema.interfaces.IIterableVocabulary"""
         for a in self.adaptors:
-            retval = self.adaptor_to_term(a)
+            retval = self.adaptor_to_term(*a)
             yield retval
 
     def __len__(self):
@@ -57,12 +57,12 @@ class GroupTypeVocabulary(object):
             raise LookupError(token)
         gsm = getGlobalSiteManager()
         a = gsm.getAdapter(self.group, ISetType, token)
-        retval = self.adaptor_to_term(a)
+        retval = self.adaptor_to_term(token, a)
         return retval
 
     @staticmethod
-    def adaptor_to_term(a):
-        retval = SimpleTerm(a[0], a[0], a[1].name)
+    def adaptor_to_term(token, a):
+        retval = SimpleTerm(token, token, a.name)
         return retval
 
     @Lazy
@@ -75,5 +75,5 @@ class GroupTypeVocabulary(object):
 
     @Lazy
     def adaptorIds(self):
-        retval = [a.typeId for a in self.adaptors]
+        retval = [a[0] for a in self.adaptors]
         return retval
