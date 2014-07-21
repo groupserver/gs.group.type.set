@@ -10,9 +10,10 @@
     <implements interface="zope.schema.interfaces.IVocabulary"/>
     <implements interface="zope.schema.interfaces.IVocabularyTokenized"/>
   </class>
-  <utility name="groupserver.GroupType"
-           provides="zope.schema.interfaces.IVocabularyFactory"
-           component=".vocabulary.GroupTypeVocabulary" />
+  <utility
+    name="groupserver.GroupType"
+    provides="zope.schema.interfaces.IVocabularyFactory"
+    component=".vocabulary.GroupTypeVocabulary" />
 
   <browser:page
     name="change-type.html"
@@ -28,4 +29,11 @@
     class="gs.group.member.viewlet.GroupAdminViewlet"
     permission="zope2.ManageProperties"
     weight="60" />
+
+  <!-- The audit event -->
+  <utility
+    name="gs.group.type.set"
+    factory=".audit.AuditEventFactory"
+    permission="zope.Public" />
+
 </configure>

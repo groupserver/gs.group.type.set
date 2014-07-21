@@ -20,6 +20,7 @@ from zope.component import getGlobalSiteManager
 from gs.content.form.base import radio_widget
 from gs.core import to_ascii
 from gs.group.base import GroupForm
+from .audit import (Auditor, CHANGE_TYPE)
 from .interfaces import (IChangeGroupType, ISetType, IUnsetType)
 
 
@@ -43,6 +44,10 @@ class ChangeGroupType(GroupForm):
             self.form_fields, self.prefix, self.context, self.request,
             form=self, data=data, ignore_request=ignore_request)
 
+    @staticmethod
+    def a_or_an(s):
+        return 'an' if (s[0] in 'aeiou') else 'a'
+
     @form.action(label='Change', failure='handle_change_action_failure')
     def handle_change(self, action, data):
         # Note that it is importtant to get the setter and unsetter *before*
@@ -55,11 +60,15 @@ class ChangeGroupType(GroupForm):
         unsetter.unset()
         setter.set()
 
-        nv = 'an' if (setter.name.lower()[0] in 'aeiou') else 'a'
-        ov = 'an' if (unsetter.name.lower()[0] in 'aeiou') else 'a'
+        # The name of the group-type in the setter is long, so get the
+        # short-name from a new unsetter.
+        newType = IUnsetType(self.context).name.lower()
+        oldType = unsetter.name.lower()
+        auditor = Auditor(self.siteInfo, self.groupInfo, self.loggedInUser)
+        auditor.info(CHANGE_TYPE, newType, oldType)
         s = 'Changed {0} <strong>to {1} {2}</strong> from {3} {4}.'
-        self.status = s.format(self.groupInfo.name, nv, setter.name.lower(),
-                               ov, unsetter.name.lower())
+        self.status = s.format(self.groupInfo.name, self.a_or_an(newType),
+                               newType, self.a_or_an(oldType), oldType)
 
     def handle_change_action_failure(self, action, data, errors):
         if len(errors) == 1:
