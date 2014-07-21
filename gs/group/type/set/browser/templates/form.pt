@@ -35,6 +35,11 @@
           metal:fill-slot="body" enctype="multipart/form-data" method="post"
           action="." tal:attributes="action request/URL">
       <h1 tal:content="view/label">Change</h1>
+      <p class="intro muted">
+        To change the type of group select the group type from
+        the list below an click
+        the <samp class="button">Change</samp> button.
+      </p>
       <tal:block define="widgets view/widgets">
         <tal:block replace="structure provider:groupserver.FormWidgets"/>
       </tal:block>

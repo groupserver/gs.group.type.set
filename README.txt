@@ -38,6 +38,8 @@ Closed        NA                NA
 :Unclosed: The ``unclosed`` property lingers from ``MailBoxer``,
            and is used to allow non-members to post to a group.
 
+See the documentation in the ``docs`` folder for more information.
+
 Page
 ====
 

@@ -3,11 +3,13 @@
            xmlns:browser="http://namespaces.zope.org/browser"
            i18n_domain="groupserver">
 
+  <include package="zope.viewlet" file="meta.zcml" />
+
+  <!--The Group Type vocabulary-->
   <class class=".vocabulary.GroupTypeVocabulary">
     <implements interface="zope.schema.interfaces.IVocabulary"/>
     <implements interface="zope.schema.interfaces.IVocabularyTokenized"/>
   </class>
-
   <utility name="groupserver.GroupType"
            provides="zope.schema.interfaces.IVocabularyFactory"
            component=".vocabulary.GroupTypeVocabulary" />
@@ -17,5 +19,13 @@
     for="gs.group.base.interfaces.IGSGroupMarker"
     class=".changeform.ChangeGroupType"
     permission="zope2.ManageProperties"/>
-
+  <!--The link to the page.-->
+  <browser:viewlet
+    name="gs-group-type-set-link"
+    for="gs.group.base.interfaces.IGSGroupMarker"
+    manager="gs.group.properties.interfaces.IGroupAdminPropertiesLinks"
+    template="browser/templates/changetypelink.pt"
+    class="gs.group.member.viewlet.GroupAdminViewlet"
+    permission="zope2.ManageProperties"
+    weight="60" />
 </configure>

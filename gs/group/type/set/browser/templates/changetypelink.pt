@@ -1,0 +1,4 @@
+<li id="gs-group-type-set-link">
+  <a tal:attributes="href string:${view/groupInfo/relativeURL}/change-type.html"
+     href="#">Change the <strong>type</strong></a>
+</li>
