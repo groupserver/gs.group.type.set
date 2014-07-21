@@ -38,7 +38,7 @@ implemented by subclasses.
 
     @staticmethod
     def add_marker(obj, interfaces):
-        '''Add a marker-interfaces to an object
+        '''Add marker-interfaces to an object
 
 :param object obj: The object to add the marker-interface to.
 :param list interfaces: A list of interfaces (as strings) to add to the
@@ -108,7 +108,7 @@ implemented by subclasses.    '''
 
     @staticmethod
     def del_marker(obj, interfaces):
-        '''Remove a marker-interfaces from an object
+        '''Remove marker-interfaces from an object
 
 :param object obj: The object to remove the marker-interface from.
 :param list interfaces: A list of interfaces (as strings) to delete from
