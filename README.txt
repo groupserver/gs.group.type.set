@@ -7,7 +7,7 @@ Set the group type
 
 :Author: `Michael JasonSmith`_
 :Contact: Michael JasonSmith <mpj17@onlinegroups.net>
-:Date: 2014-17-18
+:Date: 2014-07-21
 :Organization: `GroupServer.org`_
 :Copyright: This document is licensed under a
   `Creative Commons Attribution-Share Alike 4.0 International License`_
@@ -38,7 +38,8 @@ Closed        NA                NA
 :Unclosed: The ``unclosed`` property lingers from ``MailBoxer``,
            and is used to allow non-members to post to a group.
 
-See the documentation in the ``docs`` folder for more information.
+See the documentation in the ``docs`` folder in this product for
+more information.
 
 Page
 ====
