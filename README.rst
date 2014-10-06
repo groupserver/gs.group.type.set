@@ -7,7 +7,7 @@ Set the group type
 
 :Author: `Michael JasonSmith`_
 :Contact: Michael JasonSmith <mpj17@onlinegroups.net>
-:Date: 2014-07-21
+:Date: 2014-10-06
 :Organization: `GroupServer.org`_
 :Copyright: This document is licensed under a
   `Creative Commons Attribution-Share Alike 4.0 International License`_
@@ -59,12 +59,12 @@ group-types that are present on the system.
 Resources
 =========
 
-- Code repository: https://source.iopen.net/groupserver/gs.group.type.set
+- Code repository: https://github.com/groupserver/gs.group.type.set
 - Questions and comments to http://groupserver.org/groups/development
 - Report bugs at https://redmine.iopen.net/projects/groupserver
 
 .. [#canpost] See the *Can post* product for more information 
-              <https://source.iopen.net/groupserver/gs.group.member.canpost>
+              <https://github.com/groupserver/gs.group.member.canpost>
 
 .. _GroupServer: http://groupserver.org/
 .. _GroupServer.org: http://groupserver.org/
