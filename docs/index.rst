@@ -23,7 +23,7 @@ an arbitrary group type.
 When changing the type of a group two things need to happen: the
 old type needs to be unset_, and the new type needs to be
 set_. So each of the group types needs to provide two
-adaptors. Mostly the code is simple to the point of being
+facades. Mostly the code is simple to the point of being
 boiler-plate, because only marker-interfaces need to be cleared
 and set on the group. In addition, because all the complexity for
 unsetting and setting group-types is handled by external classes
@@ -33,10 +33,10 @@ Unset
 -----
 
 Before a group-type can be set the old type has to be unset.
-Adaptors for clearing the configuration for a given group-type
-provide the :class:`gs.group.type.set.interfaces.IUnsetType`
-interface. They are registered using ZCML similar to the
-following
+Facades (adapters) for clearing the configuration for a given
+group-type provide the
+:class:`gs.group.type.set.interfaces.IUnsetType` interface. They
+are registered using ZCML similar to the following
 
 .. code-block:: xml
 
@@ -46,13 +46,15 @@ following
     factory=".set.UnsetDiscussionGroup" />
 
 This ZCML snippet registers the code in
-:class:`UnsetDiscussionGroup` as an adaptor for a
+:class:`UnsetDiscussionGroup` as an adapter for a
 discussion-group (:class:`IGSDiscussionGroup`) to the
 :class:`IUnsetType` interface.
 
-The code for the adaptor itself is simple, as the
+The code for the facade (adapter) itself is simple, as the
 :class:`gs.group.type.set.UnsetABC` abstract base-class can be
-used to provide most of the functionality::
+used to provide most of the functionality:
+
+.. code-block:: python
 
   class UnsetDiscussionGroup(UnsetABC):
       name = 'Discussion group'
@@ -63,21 +65,23 @@ used to provide most of the functionality::
           self.del_marker(self.group, iFaces)
 
 The two attributes, :attr:`name` and :attr:`setTypeId`, are
-useful for querying the current state of the group::
+useful for querying the current state of the group:
+
+.. code-block:: python
 
   print('This is a {0}'.format(IUnsetType(group).name))
 
 The :attr:`setTypeId` attribute can be thought of as a pointer to
-the identifier (*name* in adaptor parlance) of the adaptor that
-is used to set_ the group type. It is used by the `Change page`_
-to determine the **current** group type.
+the identifier (*name* in the adapter-parlance of Zope) of the
+facade that is used to set_ the group type. It is used by the
+`Change page`_ to determine the **current** group type.
 
 Set
 ---
 
-The adaptor for setting a group to a particular type provides the
+The facade for setting a group to a particular type provides the
 :class:`gs.group.type.set.interfaces.ISetType` interface. The
-ZCML for registering such an adaptor is as follows
+ZCML for registering such a facade (adapter) is as follows
 
 .. code-block:: xml
 
@@ -87,15 +91,17 @@ ZCML for registering such an adaptor is as follows
     provides="gs.group.type.set.interfaces.ISetType"
     factory=".set.SetDiscussionGroup"  />
 
-:Note: The adaptor for setting a group-type is a *named* adaptor,
+:Note: The adapter for setting a group-type is a *named* adapter,
        because of the ``name`` attribute to the ``<adapter>``
        element. The name **must** be the same as that specified
        in the :attr:`setTypeId` attribute of the corresponding
-       unset_ adaptor.
+       unset_ adapter.
 
-The adaptor itself is simple, as the
+The facade itself is simple, as the
 :class:`gs.group.type.set.SetABC` abstract base-class is used for
-providing much of the functionality::
+providing much of the functionality:
+
+.. code-block:: python
 
   class SetDiscussionGroup(SetABC):
       name = 'Discussion group'
@@ -107,18 +113,20 @@ providing much of the functionality::
 
 The :attr:`name` is used to provide a label for the option in the
 `Change page`_. The :attr:`weight` attribute is used to order the
-adaptors in the vocabulary_.
+adapters in the vocabulary_.
 
 Vocabulary
 ~~~~~~~~~~
 
 The *Change* page uses the *vocabulary*
 :class:`gs.group.type.set.vocabulary.GroupTypeVocabulary` to list
-all the adaptors that provide the :class:`ISetType`
+all the facades that provide the :class:`ISetType`
 interface. While the vocabulary *can* be instantiated as a
 stand-alone class, usually it is used in a ``Choice`` field in a
 schema, by using the name of the corresponding
-``groupserver.GroupType`` utility::
+``groupserver.GroupType`` utility:
+
+.. code-block:: python
 
     groupType = Choice(
         title='Group type',
@@ -131,7 +139,9 @@ Change page
 
 Because all the actual functionality for changing a group-type is
 farmed off to external classes the core of the Change page is
-very simple::
+very simple:
+
+.. code-block:: python
 
         unsetter = IUnsetType(self.context)
         gsm = getGlobalSiteManager()
