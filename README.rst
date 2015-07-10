@@ -38,8 +38,6 @@ Closed        NA                NA
 :Unclosed: The ``unclosed`` property lingers from ``MailBoxer``,
            and is used to allow non-members to post to a group.
 
-See the documentation in the ``docs`` folder in this product for
-more information.
 
 Page
 ====
@@ -59,6 +57,7 @@ group-types that are present on the system.
 Resources
 =========
 
+- Documentation: see the ``docs`` folder in this product
 - Code repository: https://github.com/groupserver/gs.group.type.set
 - Questions and comments to http://groupserver.org/groups/development
 - Report bugs at https://redmine.iopen.net/projects/groupserver
