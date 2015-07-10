@@ -1,5 +1,5 @@
-``gs.group.type.set`` API
-=========================
+:mod:`gs.group.type.set` API
+============================
 
 The application programming-interface for this product is
 provided by three components: the `abstract base classes`_, the
